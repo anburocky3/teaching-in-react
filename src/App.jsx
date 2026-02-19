@@ -1,34 +1,30 @@
 import Header from "./components/Header";
-import Footer from "./components/Footer";
 import BadgeItem from "./components/BadgeItem";
 import { useState } from "react";
 
 function AppPage() {
-  // const myName = useState();
-  // const myName[0] = Get value
-  // const myName[1] = Set value
+  const [userName, setUserName] = useState("Ajith");
 
-  const [myName, SetMyName] = useState();
-
-  function ChangeMyName() {
-    // how to save a name in the state
-    SetMyName("Anbuselvan");
-  }
-
-  console.log(myName);
   return (
     <>
-      <button
-        onClick={ChangeMyName}
-        className="bg-blue-500 text-white px-4 py-2 rounded"
-      >
-        Anbu
-      </button>
-
-      <h1>{myName}</h1>
-      <Header />
+      <Header user={userName} />
       <div className="bg-orange-100 rounded text-black p-20">
-        <h1 className="text-4xl text-center">Learning React!</h1>
+        <div className="text-center">
+          <h1 className="text-4xl font-semibold">Hello {userName}!</h1>
+          <select
+            className="border border-gray-300 rounded p-2 mt-4"
+            onChange={(event) => setUserName(event.target.value)}
+          >
+            <option value="Ajith">Ajith</option>
+            <option value="Anbu">Anbu</option>
+            <option value="Arun">Arun</option>
+            <option value="Aishwarya">Aishwarya</option>
+          </select>
+          <p>
+            After completing the React course, you are now ready to build
+            amazing applications!
+          </p>
+        </div>
         <ul className="flex items-center justify-center gap-5 mt-5">
           <BadgeItem skill="HTML" color="blue">
             <svg
