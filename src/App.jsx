@@ -1,6 +1,7 @@
 import Header from "./components/Header";
 import BadgeItem from "./components/BadgeItem";
 import { useState } from "react";
+import CartItem from "./components/cart/CartItem";
 
 function AppPage() {
   const [userName, setUserName] = useState("Anbu");
@@ -55,6 +56,39 @@ function AppPage() {
           <BadgeItem skill="JavaScript" color="yellow" />
           <BadgeItem skill="React" color="purple" />
         </ul>
+
+        {/* Build a cart with items and a total price */}
+        <section className="mt-10">
+          <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2>
+          <div className="bg-white p-4 rounded shadow">
+            <ul className="space-y-2">
+              <CartItem
+                item={{
+                  name: "Avacoda",
+                  image:
+                    "https://ashanursery.com/wp-content/uploads/2025/05/WhatsApp-Image-2025-05-25-at-10.43.52-AM-1.jpeg",
+                  price: 250,
+                }}
+              />
+              <CartItem
+                item={{
+                  name: "Dragon Fruit",
+                  image:
+                    "https://healthybuddha.in/image/cache/catalog/DragonFruit-cutout-sm_grande-500x515.png",
+                  price: 300,
+                }}
+              />
+              <CartItem
+                item={{
+                  name: "Pineapple",
+                  image:
+                    "https://png.pngtree.com/png-clipart/20250119/original/pngtree-three-pineapple-fruits-with-one-of-them-cut-off-ready-to-png-image_19775729.png",
+                  price: 150,
+                }}
+              />
+            </ul>
+          </div>
+        </section>
       </div>
     </>
   );
