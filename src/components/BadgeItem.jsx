@@ -1,5 +1,5 @@
 const BadgeItem = (prop) => {
-  console.log(prop);
+  // console.log(prop);
   // console.log(prop.skill);
 
   let badgeColor = "bg-gray-500"; // Default color

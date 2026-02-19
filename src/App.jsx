@@ -1,10 +1,31 @@
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import BadgeItem from "./components/BadgeItem";
+import { useState } from "react";
 
 function AppPage() {
+  // const myName = useState();
+  // const myName[0] = Get value
+  // const myName[1] = Set value
+
+  const [myName, SetMyName] = useState();
+
+  function ChangeMyName() {
+    // how to save a name in the state
+    SetMyName("Anbuselvan");
+  }
+
+  console.log(myName);
   return (
     <>
+      <button
+        onClick={ChangeMyName}
+        className="bg-blue-500 text-white px-4 py-2 rounded"
+      >
+        Anbu
+      </button>
+
+      <h1>{myName}</h1>
       <Header />
       <div className="bg-orange-100 rounded text-black p-20">
         <h1 className="text-4xl text-center">Learning React!</h1>
@@ -26,15 +47,8 @@ function AppPage() {
           <BadgeItem skill="CSS" color="green" />
           <BadgeItem skill="JavaScript" color="yellow" />
           <BadgeItem skill="React" color="purple" />
-
-          {/* <BadgeItem skill="HTML" color="#0000FF" />
-          <BadgeItem skill="CSS" color="#00FF00" />
-          <BadgeItem skill="JavaScript" color="#FFFF00" />
-          <BadgeItem skill="React" color="#800080" />
-          <BadgeItem skill="PHP" color="#FFC0CB" /> */}
         </ul>
       </div>
-      {/* <Footer /> */}
     </>
   );
 }
