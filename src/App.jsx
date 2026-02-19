@@ -3,7 +3,7 @@ import BadgeItem from "./components/BadgeItem";
 import { useState } from "react";
 
 function AppPage() {
-  const [userName, setUserName] = useState("Ajith");
+  const [userName, setUserName] = useState("Anbu");
 
   return (
     <>
@@ -11,15 +11,26 @@ function AppPage() {
       <div className="bg-orange-100 rounded text-black p-20">
         <div className="text-center">
           <h1 className="text-4xl font-semibold">Hello {userName}!</h1>
-          <select
-            className="border border-gray-300 rounded p-2 mt-4"
-            onChange={(event) => setUserName(event.target.value)}
-          >
-            <option value="Ajith">Ajith</option>
-            <option value="Anbu">Anbu</option>
-            <option value="Arun">Arun</option>
-            <option value="Aishwarya">Aishwarya</option>
-          </select>
+          <div className="space-x-3">
+            <select
+              className="border border-gray-300 rounded p-2 mt-4"
+              onChange={(event) => setUserName(event.target.value)}
+              value={userName}
+            >
+              <option value="Ajith">Ajith</option>
+              <option value="Anbu">Anbu</option>
+              <option value="Arun">Arun</option>
+              <option value="Aishwarya">Aishwarya</option>
+            </select>
+            <input
+              type="text"
+              placeholder="Enter your name?"
+              className="border border-gray-300 p-2 mt-4 outline-none rounded"
+              onChange={(event) =>
+                event.target.value.length > 3 && setUserName(event.target.value)
+              }
+            />
+          </div>
           <p>
             After completing the React course, you are now ready to build
             amazing applications!
