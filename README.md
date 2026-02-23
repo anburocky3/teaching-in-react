@@ -311,6 +311,105 @@ function ShoppingCart() {
 
 ---
 
+## 🗓️ Day 4: React Lifecycle, useEffect, Conditional Rendering & Fetch API
+
+**Date:** February 23, 2026
+
+### Concepts Covered
+
+- **React Lifecycle with Hooks**: Understanding mount, update, and unmount phases using `useEffect`
+- **useEffect Dependency Array**: Controlling when side effects run
+- **Cleanup Functions**: Removing side effects (e.g., intervals/event listeners) during unmount or re-run
+- **Conditional Rendering**: Displaying UI based on runtime conditions
+- **Async/Await + Fetch**: Fetching API records with practical search and limit filters
+
+### Key Learnings
+
+#### React Lifecycle with `useEffect`
+
+In functional components, `useEffect` helps model lifecycle behavior:
+
+- **Mount (Birth)**: Effect runs after first render
+- **Update (Live)**: Effect re-runs when dependencies change
+- **Unmount (Death)**: Cleanup runs before component is removed
+
+```javascript
+useEffect(() => {
+  console.log("Component mounted");
+
+  const intervalId = setInterval(() => {
+    console.log("Running side effect...");
+  }, 1000);
+
+  return () => {
+    clearInterval(intervalId);
+    console.log("Component unmounted");
+  };
+}, []);
+```
+
+#### Dependency Array Behavior
+
+- `[]` → Runs once on mount, cleanup on unmount
+- `[count]` → Runs on mount and whenever `count` changes
+- No dependency array → Runs after every render
+
+#### Conditional Rendering Patterns
+
+Used multiple practical conditional rendering styles:
+
+```javascript
+{
+  users.length === 0 ? <p>No users found.</p> : null;
+}
+
+{
+  users.length > 0 && (
+    <ul>
+      {users.map((user) => (
+        <li key={user.id}>{user.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+- **Ternary** for true/false style rendering
+- **Logical AND (`&&`)** for render-if-true blocks
+
+#### Fetching API Data with Async/Await
+
+Practical API integration using `fetch` + `await`:
+
+```javascript
+useEffect(() => {
+  async function fetchUsers() {
+    const response = await fetch(
+      `https://mimic-server-api.vercel.app/users?_limit=${limit}&q=${searchTerm}`,
+    );
+    const data = await response.json();
+    setUsers(data);
+  }
+
+  fetchUsers();
+}, [searchTerm, limit]);
+```
+
+This demonstrates:
+
+- Fetching records on first render
+- Re-fetching when search input changes
+- Re-fetching when page size/limit changes
+- Updating state to re-render the UI with latest data
+
+### Code References
+
+- **Main App Integration**: [src/App.jsx](src/App.jsx)
+- **API Fetch + Conditional Rendering**: [src/components/api/RenderUsers.jsx](src/components/api/RenderUsers.jsx)
+- **Lifecycle Notes & Demo Snippets**: [LEARNING.md](LEARNING.md)
+
+---
+
 ## �🔧 Setup & Running the Project
 
 ### Prerequisites
@@ -348,11 +447,11 @@ npm run build
 
 ## 📝 Next Steps
 
-- **Day 4**: React Effects with `useEffect` hook
-- **Day 5**: Conditional Rendering and Lists
-- **Day 6**: Forms and Controlled Components
-- **Day 7**: Lifting State Up and Component Communication
+- **Day 5**: Forms and Controlled Components
+- **Day 6**: Lifting State Up and Component Communication
+- **Day 7**: Component Composition and Reusability Practice
+- **Day 8**: Error Handling and Loading States for API Calls
 
 ---
 
-**Last Updated**: February 19, 2026
+**Last Updated**: February 23, 2026

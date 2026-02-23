@@ -2,14 +2,15 @@ import Header from "./components/Header";
 import BadgeItem from "./components/BadgeItem";
 import { useState } from "react";
 import CartItem from "./components/cart/CartItem";
+import RenderUsers from "./components/api/RenderUsers";
 
 function AppPage() {
   const [userName, setUserName] = useState("Anbu");
 
   return (
-    <>
+    <div className="min-h-screen bg-orange-100">
       <Header user={userName} />
-      <div className="bg-orange-100 rounded text-black p-20">
+      <div className=" rounded text-black p-20">
         <div className="text-center">
           <h1 className="text-4xl font-semibold">Hello {userName}!</h1>
           <div className="space-x-3">
@@ -90,7 +91,12 @@ function AppPage() {
           </div>
         </section>
       </div>
-    </>
+
+      {/* Users using fetchAPI */}
+      <section className="px-20 pb-10">
+        <RenderUsers />
+      </section>
+    </div>
   );
 }
 
