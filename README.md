@@ -410,6 +410,104 @@ This demonstrates:
 
 ---
 
+## 🗓️ Day 5: Forms, Controlled Inputs, Validation & Submitting to API
+
+**Date:** February 25, 2026
+
+### Concepts Covered
+
+- **Single controlled input**: managing a single piece of state for one field
+- **Multiple inputs (best practice)**: using a single state object and a generic `onChange` handler
+- **Reusable form field components**: split fields into `Input`, `InputLabel`, and `InputGroup` for consistency
+- **Client-side validation**: simple required/length checks and basic email validation before submit
+- **Submitting data to API**: POSTing validated form data to the mimic API
+
+### Key Learnings & Examples
+
+#### Reusable Form Components
+
+Each field is a small component for clarity and reuse:
+
+- [src/components/ui/forms/Input.jsx](src/components/ui/forms/Input.jsx)
+- [src/components/ui/forms/InputLabel.jsx](src/components/ui/forms/InputLabel.jsx)
+- [src/components/ui/forms/InputGroup.jsx](src/components/ui/forms/InputGroup.jsx)
+
+These wrap native inputs and labels so form markup is consistent across the app.
+
+#### Single Input (Controlled)
+
+```javascript
+const [name, setName] = useState("");
+
+<Input
+  name="name"
+  value={name}
+  onChange={(e) => setName(e.target.value)}
+  placeholder="Your name"
+/>;
+```
+
+This pattern keeps the input value in React state so the UI always reflects the source of truth.
+
+#### Multiple Inputs (Best Practice)
+
+Use one state object and a generic handler:
+
+```javascript
+const [form, setForm] = useState({ name: "", email: "" });
+
+function handleChange(e) {
+  const { name, value } = e.target;
+  setForm((prev) => ({ ...prev, [name]: value }));
+}
+
+<Input name="name" value={form.name} onChange={handleChange} />
+<Input name="email" value={form.email} onChange={handleChange} />
+```
+
+This scales well when adding fields and lets you keep the submit handler simple.
+
+#### Validation Example
+
+```javascript
+function validate(form) {
+  if (!form.name || form.name.length < 3)
+    return "Name must be at least 3 characters";
+  if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(form.email)) return "Invalid email";
+  return null;
+}
+```
+
+#### Submitting to the Mimic API
+
+```javascript
+async function handleSubmit(e) {
+  e.preventDefault();
+
+  const error = validate(form);
+  if (error) {
+    // show error to user
+    return;
+  }
+
+  const response = await fetch("https://mimic-server-api.vercel.app/users", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(form),
+  });
+
+  const data = await response.json();
+  // handle success (reset form, show message, etc.)
+}
+```
+
+Notes:
+
+- The project used the mimic-server-api (https://github.com/anburocky3/mimic-server-api/fork) for the demo backend.
+- Always validate before sending and show clear feedback to learners.
+
+---
+
 ## �🔧 Setup & Running the Project
 
 ### Prerequisites
@@ -447,11 +545,10 @@ npm run build
 
 ## 📝 Next Steps
 
-- **Day 5**: Forms and Controlled Components
 - **Day 6**: Lifting State Up and Component Communication
 - **Day 7**: Component Composition and Reusability Practice
 - **Day 8**: Error Handling and Loading States for API Calls
 
 ---
 
-**Last Updated**: February 23, 2026
+**Last Updated**: February 25, 2026

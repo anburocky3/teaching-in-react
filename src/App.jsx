@@ -3,6 +3,7 @@ import BadgeItem from "./components/BadgeItem";
 import { useState } from "react";
 import CartItem from "./components/cart/CartItem";
 import RenderUsers from "./components/api/RenderUsers";
+import LearningForms from "./components/ui/LearningForms";
 
 function AppPage() {
   const [userName, setUserName] = useState("Anbu");
@@ -95,6 +96,11 @@ function AppPage() {
       {/* Users using fetchAPI */}
       <section className="px-20 pb-10">
         <RenderUsers />
+      </section>
+
+      {/* Forms in react */}
+      <section className="max-w-lg mx-auto py-5">
+        <LearningForms />
       </section>
     </div>
   );
