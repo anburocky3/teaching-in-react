@@ -1,28 +1,37 @@
+import { NavLink } from "react-router";
+
 const Header = ({ user }) => {
   return (
     <header className="bg-zinc-950 text-white  p-4  ">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
-        <h4 className="font-semibold text-orange-600">{user}</h4>
+        <NavLink to="/">
+          <h4 className="font-semibold text-orange-600">{user}</h4>
+        </NavLink>
         <ul className="flex items-center space-x-10 text-sm">
           <li>
-            <a href="#" className="hover:text-orange-300">
+            <NavLink to="/" className="hover:text-orange-300">
               Home
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="#" className="hover:text-orange-300">
-              Profile
-            </a>
+            <NavLink to="/about" className="hover:text-orange-300">
+              About
+            </NavLink>
           </li>
           <li>
-            <a href="#" className="hover:text-orange-300">
+            <NavLink to="/users" className="hover:text-orange-300">
+              Users
+            </NavLink>
+          </li>
+          <li>
+            <NavLink to="/blog" className="hover:text-orange-300">
               Blog
-            </a>
+            </NavLink>
           </li>
           <li>
-            <a href="#" className="hover:text-orange-300">
+            <NavLink to="/contact" className="hover:text-orange-300">
               Contact
-            </a>
+            </NavLink>
           </li>
         </ul>
       </div>

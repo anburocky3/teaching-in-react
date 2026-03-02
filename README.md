@@ -508,6 +508,104 @@ Notes:
 
 ---
 
+## 🗓️ Day 6: React Router — Declarative Client-Side Routing
+
+**Date:** March 2, 2026
+
+### Concepts Covered
+
+- **Declarative Routing**: Using `<BrowserRouter>`, `<Routes>`, and `<Route>` components instead of imperative code
+- **Route Matching**: Path parameters, nested routes, and wildcard patterns
+- **Navigation**: `<Link>` and `<NavLink>` for client-side navigation without full page reload
+- **Dynamic Routes**: Extracting URL parameters with `useParams()`
+- **Nested Components**: Organizing routes with `<Outlet>` for shared layouts
+
+### Key Learnings
+
+#### Setup & Provider Pattern
+
+```javascript
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+function App() {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/users" element={<Users />} />
+        <Route path="/users/:id" element={<UserDetail />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+```
+
+Declarative routing keeps the router structure visible at the top level.
+
+#### Navigation with Link
+
+```javascript
+import { Link } from "react-router-dom";
+
+function Navigation() {
+  return (
+    <nav>
+      <Link to="/">Home</Link>
+      <Link to="/users">Users</Link>
+    </nav>
+  );
+}
+```
+
+`<Link>` prevents full page reload and updates URL without network request.
+
+#### Dynamic Route Parameters
+
+```javascript
+import { useParams } from "react-router-dom";
+
+function UserDetail() {
+  const { id } = useParams();
+
+  useEffect(() => {
+    // Fetch user by id
+    fetch(`https://mimic-server-api.vercel.app/users/${id}`)
+      .then((res) => res.json())
+      .then((user) => setUser(user));
+  }, [id]);
+
+  return <div>User ID: {id}</div>;
+}
+```
+
+#### Nested Routes & Layout Sharing
+
+```javascript
+<Routes>
+  <Route element={<Layout />}>
+    <Route path="/" element={<Home />} />
+    <Route path="/users" element={<Users />} />
+    <Route path="*" element={<NotFound />} />
+  </Route>
+</Routes>
+```
+
+Use `<Outlet>` in `Layout` to render child routes.
+
+### Best Practices
+
+- Wrap app with `<BrowserRouter>` at the top level (usually in `main.jsx`)
+- Use `<NavLink>` for navigation items to highlight active routes
+- Always fetch dependent data in `useEffect` with `useParams()` values in dependency array
+- Handle 404s with a catch-all route (`path="*"`)
+
+### Resources
+
+- Official Docs: [reactrouter.com](https://reactrouter.com)
+- Declarative vs Imperative: Demonstrate why component-based routing is clearer and more React-like
+
+---
+
 ## �🔧 Setup & Running the Project
 
 ### Prerequisites
@@ -545,10 +643,9 @@ npm run build
 
 ## 📝 Next Steps
 
-- **Day 6**: Lifting State Up and Component Communication
-- **Day 7**: Component Composition and Reusability Practice
-- **Day 8**: Error Handling and Loading States for API Calls
+- **Day 7**: Context API — Global State Management (wrap-up before Next.js)
+- **Day 8+**: Build your first app with **Next.js** — Server Components, SSR, and File-Based Routing
 
 ---
 
-**Last Updated**: February 25, 2026
+**Last Updated**: March 2, 2026
