@@ -7,6 +7,7 @@ import UsersPage from "./pages/UsersPage.jsx";
 import BlogPage from "./pages/blog/BlogPage.jsx";
 import AboutPage from "./pages/about/AboutPage.jsx";
 import BlogDetailPage from "./pages/blog/BlogDetailPage.jsx";
+import BlogListing from "./pages/blog/BlogListing.jsx";
 
 createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -29,7 +30,7 @@ createRoot(document.getElementById("root")).render(
       */}
       <Route path="/users" element={<UsersPage />} />
       <Route path="/blog" element={<BlogPage />}>
-        <Route index element={<div>Your Blog should list here!</div>} />
+        <Route index element={<BlogListing />} />
         <Route path=":id" element={<BlogDetailPage />} />
       </Route>
       {/* 

@@ -18,7 +18,7 @@ export default function BlogPage() {
         <div className="my-3 max-w-xl mx-auto">{/* <LearningForms /> */}</div>
       </section>
 
-      <section className="p-10 bg-gray-200 m-10 rounded">
+      <section>
         <Outlet />
       </section>
     </div>
