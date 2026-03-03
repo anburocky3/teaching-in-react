@@ -8,39 +8,41 @@ import BlogPage from "./pages/blog/BlogPage.jsx";
 import AboutPage from "./pages/about/AboutPage.jsx";
 import BlogDetailPage from "./pages/blog/BlogDetailPage.jsx";
 import BlogListing from "./pages/blog/BlogListing.jsx";
+import AppProvider from "./context/AppContext.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <BrowserRouter>
-    {/* 
-  1. / - Home page
-    2. /about - About page
-    3. /contact - Contact page
-  */}
-    <Routes>
-      <Route path="/" element={<App />} />
-      <Route path="/about" element={<AboutPage />}>
-        <Route index element={<div>About Index Page</div>} />
-        <Route path="team" element={<div>About Team Page</div>} />
-        <Route path="mission" element={<div>About Mission Page</div>} />
-      </Route>
-      {/* 
-        /about -> AboutPage
-        /about/team -> AboutTeamPage
-        /about/mission -> AboutMissionPage
-      */}
-      <Route path="/users" element={<UsersPage />} />
-      <Route path="/blog" element={<BlogPage />}>
-        <Route index element={<BlogListing />} />
-        <Route path=":id" element={<BlogDetailPage />} />
-      </Route>
-      {/* 
-      /blog -> BlogPage
-      /blog/:id -> BlogDetailsPage
-      /blog/author -> BlogAuthorPage
-      */}
-      <Route path="/contact" element={<ContactPage />} />
-
-      <Route path="*" element={<div>404 - Page Not Found</div>} />
-    </Routes>
-  </BrowserRouter>,
+  <AppProvider>
+    <BrowserRouter>
+      {/*
+    1. / - Home page
+      2. /about - About page
+      3. /contact - Contact page
+    */}
+      <Routes>
+        <Route path="/" element={<App />} />
+        <Route path="/about" element={<AboutPage />}>
+          <Route index element={<div>About Index Page</div>} />
+          <Route path="team" element={<div>About Team Page</div>} />
+          <Route path="mission" element={<div>About Mission Page</div>} />
+        </Route>
+        {/*
+          /about -> AboutPage
+          /about/team -> AboutTeamPage
+          /about/mission -> AboutMissionPage
+        */}
+        <Route path="/users" element={<UsersPage />} />
+        <Route path="/blog" element={<BlogPage />}>
+          <Route index element={<BlogListing />} />
+          <Route path=":id" element={<BlogDetailPage />} />
+        </Route>
+        {/*
+        /blog -> BlogPage
+        /blog/:id -> BlogDetailsPage
+        /blog/author -> BlogAuthorPage
+        */}
+        <Route path="/contact" element={<ContactPage />} />
+        <Route path="*" element={<div>404 - Page Not Found</div>} />
+      </Routes>
+    </BrowserRouter>
+  </AppProvider>,
 );

@@ -1,23 +1,24 @@
-import { useState } from "react";
+import { useContext } from "react";
 import Headers from "../components/Header";
 import BadgeItem from "../components/BadgeItem";
 import CartItem from "../components/cart/CartItem";
+import { AppContext } from "../context/MyContext";
 
 export default function HomePage() {
-  const [userName, setUserName] = useState("Anbu");
+  const { appName, setAppName } = useContext(AppContext);
 
   return (
     <div className="min-h-screen bg-orange-100">
       <title>MyApp - Home</title>
-      <Headers user={userName} />
+      <Headers />
       <div className=" rounded text-black p-20">
         <div className="text-center">
-          <h1 className="text-4xl font-semibold">Hello {userName}!</h1>
+          <h1 className="text-4xl font-semibold">Hello {appName}!</h1>
           <div className="space-x-3">
             <select
               className="border border-gray-300 rounded p-2 mt-4"
-              onChange={(event) => setUserName(event.target.value)}
-              value={userName}
+              onChange={(event) => setAppName(event.target.value)}
+              value={appName}
             >
               <option value="Ajith">Ajith</option>
               <option value="Anbu">Anbu</option>
@@ -29,7 +30,7 @@ export default function HomePage() {
               placeholder="Enter your name?"
               className="border border-gray-300 p-2 mt-4 outline-none rounded"
               onChange={(event) =>
-                event.target.value.length > 3 && setUserName(event.target.value)
+                event.target.value.length > 3 && setAppName(event.target.value)
               }
             />
           </div>
@@ -60,7 +61,9 @@ export default function HomePage() {
 
         {/* Build a cart with items and a total price */}
         <section className="mt-10">
-          <h2 className="text-2xl font-bold mb-4">Shopping Cart</h2>
+          <h2 className="text-2xl font-bold mb-4">
+            Shopping Cart for {appName}
+          </h2>
           <div className="bg-white p-4 rounded shadow">
             <ul className="space-y-2">
               <CartItem

@@ -5,7 +5,7 @@ export default function AboutPage() {
   return (
     <div className="about-page">
       <title>About - MyApp</title>
-      <Header user={"Anbu"} />
+      <Header />
       <div className="p-10 bg-orange-50 text-center">
         <h1 className="text-3xl font-bold mb-4">About Us</h1>
         <p className="text-gray-700">

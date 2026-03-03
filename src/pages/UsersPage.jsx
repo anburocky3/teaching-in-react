@@ -5,7 +5,7 @@ export default function UsersPage() {
   return (
     <div className="contact-page">
       <title>Users - MyApp</title>
-      <Header user={"Anbu"} />
+      <Header />
 
       <section className="p-10 bg-orange-50">
         <h1 className="font-semibold text-2xl">Our Users</h1>

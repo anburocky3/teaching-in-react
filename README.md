@@ -2,6 +2,20 @@
 
 A practical React learning project built with **Vite** and **JSX**, documenting daily learning concepts and implementation examples.
 
+![Web UI](./screenshots/1.png)
+
+---
+
+## 📚 Learning Path Overview
+
+- [Day 1: DOM, React.createElement & JSX Foundation](#day-1)
+- [Day 2: React Components, Folder Structure & Props](#day-2)
+- [Day 3: React State & useState Hook](#day-3)
+- [Day 4: React Lifecycle, useEffect, Conditional Rendering & Fetch API](#day-4)
+- [Day 5: Forms, Controlled Inputs, Validation & Submitting to API](#day-5)
+- [Day 6: React Router — Declarative Client-Side Routing](#day-6)
+- [Day 7: Context API & API Fetch Design](#day-7)
+
 ---
 
 ## 📚 Learning Path Overview
@@ -9,6 +23,8 @@ A practical React learning project built with **Vite** and **JSX**, documenting 
 This project tracks the step-by-step learning of React fundamentals, from DOM manipulation to component-based architecture.
 
 ---
+
+<a id="day-1"></a>
 
 ## 🗓️ Day 1: DOM, React.createElement & JSX Foundation
 
@@ -65,6 +81,8 @@ This project was initialized using Vite's React template, which provides:
 - **Check this repo**: [https://github.com/anburocky3/dom-vs-virtual-dom](https://github.com/anburocky3/dom-vs-virtual-dom)
 
 ---
+
+<a id="day-2"></a>
 
 ## 🗓️ Day 2: React Components, Folder Structure & Props
 
@@ -161,6 +179,8 @@ The [BadgeItem.jsx](src/components/BadgeItem.jsx) component demonstrates:
 - Reusability across multiple instances
 
 ---
+
+<a id="day-3"></a>
 
 ## �️ Day 3: React State & useState Hook
 
@@ -311,6 +331,8 @@ function ShoppingCart() {
 
 ---
 
+<a id="day-4"></a>
+
 ## 🗓️ Day 4: React Lifecycle, useEffect, Conditional Rendering & Fetch API
 
 **Date:** February 23, 2026
@@ -410,6 +432,8 @@ This demonstrates:
 
 ---
 
+<a id="day-5"></a>
+
 ## 🗓️ Day 5: Forms, Controlled Inputs, Validation & Submitting to API
 
 **Date:** February 25, 2026
@@ -507,6 +531,8 @@ Notes:
 - Always validate before sending and show clear feedback to learners.
 
 ---
+
+<a id="day-6"></a>
 
 ## 🗓️ Day 6: React Router — Declarative Client-Side Routing
 
@@ -606,6 +632,72 @@ Use `<Outlet>` in `Layout` to render child routes.
 
 ---
 
+<a id="day-7"></a>
+
+## 🗓️ Day 7: Context API & API Fetch Design
+
+**Date:** March 3, 2026
+
+### Concepts Covered
+
+- **API integration UX**: designing user interfaces around data fetched from `mimic-server-api` endpoints
+- **Context API (React 19.2)**: creating providers, wrapping the app, and consuming context in child components
+- **Shared state using Context**: avoiding prop drilling for global data such as fetched records, theme, or auth info
+- **Challenges for practice**: build a context-based data provider and create multiple consumer components that react to it
+
+### Key Learnings
+
+#### Fetching & UI/UX
+
+Learners experimented with several endpoints from the mimic API and focused on presenting results with clean UI:
+
+- Design a loader/spinner while data is being fetched
+- Show error messages when fetch fails
+- Build search/filter controls that update context state and trigger new requests
+
+#### Context API Basics
+
+```javascript
+const UserContext = React.createContext();
+
+function UserProvider({ children }) {
+  const [users, setUsers] = useState([]);
+
+  useEffect(() => {
+    fetch("https://mimic-server-api.vercel.app/users")
+      .then((r) => r.json())
+      .then(setUsers);
+  }, []);
+
+  return (
+    <UserContext.Provider value={{ users, setUsers }}>
+      {children}
+    </UserContext.Provider>
+  );
+}
+
+function UserList() {
+  const { users } = useContext(UserContext);
+  return (
+    <ul>
+      {users.map((u) => (
+        <li key={u.id}>{u.name}</li>
+      ))}
+    </ul>
+  );
+}
+```
+
+Wrap the root (often in `main.jsx`) with `<UserProvider>` so any component can call `useContext(UserContext)`.
+
+#### Challenges
+
+1. Create a `ThemeContext` that toggles between light/dark modes and use it in multiple components.
+2. Build a search form that updates context state and displays filtered results in another component.
+3. Implement a paginator with context-managed page number and fetch new data accordingly.
+
+---
+
 ## �🔧 Setup & Running the Project
 
 ### Prerequisites
@@ -643,9 +735,8 @@ npm run build
 
 ## 📝 Next Steps
 
-- **Day 7**: Context API — Global State Management (wrap-up before Next.js)
-- **Day 8+**: Build your first app with **Next.js** — Server Components, SSR, and File-Based Routing
+- **Day 8**: Begin a **Next.js** application — migrating concepts and exploring server components
 
 ---
 
-**Last Updated**: March 2, 2026
+**Last Updated**: March 3, 2026

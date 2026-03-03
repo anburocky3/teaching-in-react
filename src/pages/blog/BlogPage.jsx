@@ -6,7 +6,7 @@ export default function BlogPage() {
   return (
     <div className="blog-page">
       <title>Blog - MyApp</title>
-      <Header user={"Anbu"} />
+      <Header />
 
       <section className="p-10 bg-orange-50 text-center">
         <h1 className="text-3xl font-bold mb-4">Welcome to the Blog Page</h1>

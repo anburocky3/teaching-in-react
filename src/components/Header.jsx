@@ -1,11 +1,15 @@
+import { useContext } from "react";
 import { NavLink } from "react-router";
+import { AppContext } from "../context/MyContext";
 
-const Header = ({ user }) => {
+const Header = () => {
+  const { appName } = useContext(AppContext);
+
   return (
     <header className="bg-zinc-950 text-white  p-4  ">
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         <NavLink to="/">
-          <h4 className="font-semibold text-orange-600">{user}</h4>
+          <h4 className="font-semibold text-orange-600">{appName}</h4>
         </NavLink>
         <ul className="flex items-center space-x-10 text-sm">
           <li>
