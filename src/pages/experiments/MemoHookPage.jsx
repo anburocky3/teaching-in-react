@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import RenderUsers from "../../components/api/RenderUsers";
 import ChildPage1 from "./ChildPage1";
 import ChildPage2 from "./ChildPage2";
@@ -17,13 +17,13 @@ export default function MemoHookPage() {
     setParent(Math.floor(Math.random() * 100));
   };
 
-  const updateChild1 = () => {
+  const updateChild1 = useCallback(() => {
     setChild1(Math.floor(Math.random() * 100));
-  };
+  }, []);
 
-  const updateChild2 = () => {
+  const updateChild2 = useCallback(() => {
     setChild2(Math.floor(Math.random() * 100));
-  };
+  }, []);
 
   return (
     <div className={`min-h-screen bg-green-100`}>
@@ -46,25 +46,11 @@ export default function MemoHookPage() {
             </button>
           </div>
           <div className="flex items-center justify-between">
-            <ChildPage1 value={child1} />
-            <button
-              type="button"
-              onClick={updateChild1}
-              className="px-2 py-1 rounded border hover:bg-gray-50"
-            >
-              Update Child1
-            </button>
+            <ChildPage1 value={child1} updateChild={updateChild1} />
           </div>
 
           <div className="flex items-center justify-between">
-            <ChildPage2 value={child2} />
-            <button
-              type="button"
-              onClick={updateChild2}
-              className="px-2 py-1 rounded border hover:bg-gray-50"
-            >
-              Update Child2
-            </button>
+            <ChildPage2 value={child2} updateChild={updateChild2} />
           </div>
         </div>
       </div>
