@@ -15,6 +15,7 @@ A practical React learning project built with **Vite** and **JSX**, documenting 
 - [Day 5: Forms, Controlled Inputs, Validation & Submitting to API](#day-5)
 - [Day 6: React Router — Declarative Client-Side Routing](#day-6)
 - [Day 7: Context API & API Fetch Design](#day-7)
+- [Day 8: React.memo, useCallback, and useMemo](#day-8)
 
 ---
 
@@ -698,6 +699,96 @@ Wrap the root (often in `main.jsx`) with `<UserProvider>` so any component can c
 
 ---
 
+<a id="day-8"></a>
+
+## Day 8: React.memo, useCallback, and useMemo
+
+**Date:** March 9, 2026
+**Based on last 3 commits:**
+
+- `D8: memo functions in react`
+- `D8: useCallback with memo functions`
+- `D8: useMemo`
+
+### Concepts Covered
+
+- **`React.memo`**: Skip child re-rendering when props have not changed
+- **`useCallback`**: Keep callback reference stable between parent renders
+- **`useMemo`**: Cache computed values and recompute only when dependencies change
+- **Render behavior**: Understand why parent re-renders first when parent state changes
+
+### Key Learnings
+
+#### 1. Parent Re-renders First (Expected)
+
+In the memo experiment page, `parent`, `child1`, and `child2` are all state values in the same parent component (`MemoHookPage`).
+So updating any of these values triggers a parent render first.
+
+#### 2. `React.memo` for Child Components
+
+`ChildPage1` and `ChildPage2` are wrapped with `memo(...)`:
+
+```javascript
+import { memo } from "react";
+
+const ChildPage1 = memo(({ value, updateChild }) => {
+  return <h3>Child Page 1 - {value}</h3>;
+});
+```
+
+This helps avoid re-rendering a child when both `value` and `updateChild` props are unchanged.
+
+#### 3. `useCallback` with Memoized Children
+
+When passing functions as props, callback identity matters. `useCallback` keeps the same function reference across renders:
+
+```javascript
+const updateChild1 = useCallback(() => {
+  setChild1(Math.floor(Math.random() * 100));
+}, []);
+
+const updateChild2 = useCallback(() => {
+  setChild2(Math.floor(Math.random() * 100));
+}, []);
+```
+
+Without `useCallback`, a new function is created on each parent render, which can cause memoized children to re-render unnecessarily.
+
+#### 4. `useMemo` for Derived/Computed Values
+
+The `ReactUseMemoPage` demonstrates memoizing a salary calculation:
+
+```javascript
+const grossSalary = useMemo(() => {
+  return (
+    user.baseSalary +
+    user.bonus +
+    user.homeAllowance +
+    user.fuelAllowance -
+    user.tax
+  );
+}, [user]);
+```
+
+Use this pattern for expensive computations or derived values that should not recompute on every render.
+
+### Code References
+
+- `src/pages/experiments/MemoHookPage.jsx` - parent/child render behavior + `useCallback`
+- `src/pages/experiments/ChildPage1.jsx` - `React.memo` child example
+- `src/pages/experiments/ChildPage2.jsx` - `React.memo` child example
+- `src/pages/experiments/ReactUseMemoPage.jsx` - `useMemo` computation example
+- `src/pages/experiments/ExperimentIndexPage.jsx` - navigation links for experiments
+
+### Practical Notes
+
+- Use `React.memo` when child props are stable and rendering is non-trivial.
+- Use `useCallback` primarily when passing handlers to memoized children.
+- Use `useMemo` for expensive derived values, not for every small expression.
+- Optimization hooks should be measured with React DevTools profiler before overusing them.
+
+---
+
 ## �🔧 Setup & Running the Project
 
 ### Prerequisites
@@ -735,8 +826,10 @@ npm run build
 
 ## 📝 Next Steps
 
-- **Day 8**: Begin a **Next.js** application — migrating concepts and exploring server components
+- **Day 9**: Implement `useReducer` experiments and compare with `useState` for complex state transitions
+- Add route-level examples for both `React.memo + useCallback` and `useMemo` under `/experiments`
+- Add profiler screenshots to document render optimizations visually
 
 ---
 
-**Last Updated**: March 3, 2026
+**Last Updated**: March 9, 2026
