@@ -12,6 +12,7 @@ import AppProvider from "./context/AppContext.jsx";
 import ExperimentPage from "./pages/experiments/ExperimentPage.jsx";
 import ExperimentIndexPage from "./pages/experiments/ExperimentIndexPage.jsx";
 import MemoHookPage from "./pages/experiments/MemoHookPage.jsx";
+import ReactUseMemoPage from "./pages/experiments/ReactUseMemoPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <AppProvider>
@@ -40,7 +41,8 @@ createRoot(document.getElementById("root")).render(
         </Route>
         <Route path="/experiments" element={<ExperimentPage />}>
           <Route index element={<ExperimentIndexPage />} />
-          <Route path="usememo" element={<MemoHookPage />} />
+          <Route path="reactmemo" element={<MemoHookPage />} />
+          <Route path="usememo" element={<ReactUseMemoPage />} />
           <Route path="usereducer" element={<div>UseReducer Experiment</div>} />
         </Route>
         {/*

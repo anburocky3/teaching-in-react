@@ -4,6 +4,14 @@ export default function ExperimentIndexPage() {
   return (
     <ul className="list-disc list-inside mt-2">
       <li>
+        <NavLink
+          to="/experiments/reactmemo"
+          className="text-blue-500 underline"
+        >
+          React memo + useCallback
+        </NavLink>
+      </li>
+      <li>
         <NavLink to="/experiments/usememo" className="text-blue-500 underline">
           UseMemo
         </NavLink>
