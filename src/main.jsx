@@ -9,6 +9,9 @@ import AboutPage from "./pages/about/AboutPage.jsx";
 import BlogDetailPage from "./pages/blog/BlogDetailPage.jsx";
 import BlogListing from "./pages/blog/BlogListing.jsx";
 import AppProvider from "./context/AppContext.jsx";
+import ExperimentPage from "./pages/experiments/ExperimentPage.jsx";
+import ExperimentIndexPage from "./pages/experiments/ExperimentIndexPage.jsx";
+import MemoHookPage from "./pages/experiments/MemoHookPage.jsx";
 
 createRoot(document.getElementById("root")).render(
   <AppProvider>
@@ -34,6 +37,11 @@ createRoot(document.getElementById("root")).render(
         <Route path="/blog" element={<BlogPage />}>
           <Route index element={<BlogListing />} />
           <Route path=":id" element={<BlogDetailPage />} />
+        </Route>
+        <Route path="/experiments" element={<ExperimentPage />}>
+          <Route index element={<ExperimentIndexPage />} />
+          <Route path="usememo" element={<MemoHookPage />} />
+          <Route path="usereducer" element={<div>UseReducer Experiment</div>} />
         </Route>
         {/*
         /blog -> BlogPage

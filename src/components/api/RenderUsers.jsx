@@ -5,6 +5,8 @@ export default function RenderUsers() {
   const [searchTerm, setSearchTerm] = useState("");
   const [limit, setLimit] = useState(5);
 
+  console.log("Rendering RenderUsers");
+
   useEffect(() => {
     // will run at first!
 
