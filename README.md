@@ -16,6 +16,7 @@ A practical React learning project built with **Vite** and **JSX**, documenting 
 - [Day 6: React Router — Declarative Client-Side Routing](#day-6)
 - [Day 7: Context API & API Fetch Design](#day-7)
 - [Day 8: React.memo, useCallback, and useMemo](#day-8)
+- [Day 9: Supabase — Real Database CRUD with React](#day-9)
 
 ---
 
@@ -789,7 +790,175 @@ Use this pattern for expensive computations or derived values that should not re
 
 ---
 
-## �🔧 Setup & Running the Project
+<a id="day-9"></a>
+
+## 🗓️ Day 9: Supabase — Real Database CRUD with React
+
+**Date:** March 16, 2026
+
+### Concepts Covered
+
+- **Supabase setup**: creating a project, obtaining API credentials, and connecting from a Vite React app
+- **Singleton Supabase client**: one shared instance across the whole app
+- **Read (SELECT)**: fetching all rows from a Supabase table on component mount
+- **Create (INSERT)**: inserting a new row via a controlled form using `FormData`
+- **Delete (DELETE)**: deleting a row by primary key with a confirmation guard
+- **Update (UPSERT/UPDATE)**: _(assigned as student exercise — see assignment below)_
+- **Environment variables**: keeping Supabase URL and key out of source code via `.env`
+
+### Key Learnings
+
+#### Supabase Client Setup (Singleton)
+
+Create one shared client and import it everywhere. Store secrets in `.env`:
+
+```bash
+# .env
+VITE_SUPABASE_URL=https://your-project.supabase.co
+VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY=your-anon-key
+```
+
+```javascript
+// src/utils/supabase.js
+import { createClient } from "@supabase/supabase-js";
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_DEFAULT_KEY;
+
+const supabase = createClient(supabaseUrl, supabaseKey);
+
+// Singleton pattern — one instance reused across the whole app
+export default supabase;
+```
+
+#### Read — Fetch All Records
+
+Use `useEffect` to load data on mount and store it in state:
+
+```javascript
+import { useEffect, useState } from "react";
+import supabase from "../../utils/supabase";
+
+export default function InternsPage() {
+  const [interns, setInterns] = useState([]);
+
+  useEffect(() => {
+    async function getInterns() {
+      const { data } = await supabase.from("teams").select();
+      setInterns(data);
+    }
+    getInterns();
+  }, []);
+
+  // render interns table ...
+}
+```
+
+#### Create — Insert a New Record
+
+Collect form values with `FormData`, validate, then call `.insert()`:
+
+```javascript
+const createIntern = async (e) => {
+  e.preventDefault();
+  const formData = new FormData(e.target);
+
+  // Basic validation
+  if (!formData.get("name")) return alert("Name is required.");
+  if (!formData.get("age"))  return alert("Age is required.");
+  if (!formData.get("gender")) return alert("Gender is required.");
+
+  const internData = {
+    name:   formData.get("name"),
+    age:    formData.get("age"),
+    gender: formData.get("gender"),
+  };
+
+  const { error } = await supabase.from("teams").insert(internData);
+
+  if (error) {
+    console.error(error);
+    alert("Failed to create intern.");
+  } else {
+    alert("Intern created successfully!");
+  }
+};
+```
+
+#### Delete — Remove a Record by ID
+
+Ask for confirmation, then use `.delete().eq("id", id)`:
+
+```javascript
+async function deleteIntern(id) {
+  if (!window.confirm("Are you sure you want to delete this intern?")) return;
+
+  const { error } = await supabase.from("teams").delete().eq("id", id);
+
+  if (error) {
+    console.error(error);
+    alert("Failed to delete intern.");
+  } else {
+    // Optimistic UI — remove from local state immediately
+    setInterns(interns.filter((intern) => intern.id !== id));
+  }
+}
+```
+
+#### Update — Edit a Record (Assignment)
+
+Students are assigned to implement this on their own. The Supabase method to use:
+
+```javascript
+// Update a record matching a given id
+const { error } = await supabase
+  .from("teams")
+  .update({ name: "New Name", age: 25, gender: "female" })
+  .eq("id", internId);
+```
+
+Steps to complete the assignment:
+1. Add an **Edit** button next to each row in `InternsPage`.
+2. Create an `InternsEdit.jsx` page (or an inline form) pre-populated with the existing values.
+3. On submit, call `.update().eq("id", id)` and navigate back to `/users`.
+4. Register the route `path="edit/:id"` under `/users` in `main.jsx`.
+
+### Routes Added
+
+| Path | Component | Purpose |
+|---|---|---|
+| `/users` | `UsersPage` → `InternsPage` | List all interns (Read + Delete) |
+| `/users/create` | `InternsCreate` | Add a new intern (Create) |
+| `/users/edit/:id` | `InternsEdit` _(assignment)_ | Edit existing intern (Update) |
+
+### Database Table
+
+**Table name**: `teams`
+
+| Column | Type | Notes |
+|---|---|---|
+| `id` | `int8` | Primary key, auto-generated |
+| `name` | `text` | Intern's full name |
+| `age` | `int4` | Intern's age |
+| `gender` | `text` | `male` / `female` / `other` |
+
+### Code References
+
+- [src/utils/supabase.js](src/utils/supabase.js) — Supabase singleton client
+- [src/pages/users/InternsPage.jsx](src/pages/users/InternsPage.jsx) — Read + Delete
+- [src/pages/users/InternsCreate.jsx](src/pages/users/InternsCreate.jsx) — Create form
+- [src/pages/users/UsersPage.jsx](src/pages/users/UsersPage.jsx) — Page wrapper
+
+### Best Practices Introduced
+
+- **Never commit API keys** — always use `.env` and add it to `.gitignore`
+- **Singleton client** — import from one file instead of calling `createClient` multiple times
+- **Optimistic UI** — update local state immediately after a successful delete instead of re-fetching
+- **Validate before writing** — always check required fields before calling `insert` or `update`
+
+---
+
+## 🔧 Setup & Running the Project
 
 ### Prerequisites
 
@@ -826,10 +995,10 @@ npm run build
 
 ## 📝 Next Steps
 
-- **Day 9**: Implement `useReducer` experiments and compare with `useState` for complex state transitions
-- Add route-level examples for both `React.memo + useCallback` and `useMemo` under `/experiments`
+- **Day 9 Assignment**: Complete the Update feature — create `InternsEdit.jsx`, wire it to `/users/edit/:id`, and call `.update().eq("id", id)` on Supabase
+- **Day 10**: Explore `useReducer` for complex state management and compare it with `useState`
 - Add profiler screenshots to document render optimizations visually
 
 ---
 
-**Last Updated**: March 9, 2026
+**Last Updated**: March 16, 2026
