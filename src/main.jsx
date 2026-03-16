@@ -3,7 +3,7 @@ import "./index.css";
 import App from "./App.jsx";
 import { BrowserRouter, Route, Router, Routes } from "react-router";
 import ContactPage from "./pages/ContactPage.jsx";
-import UsersPage from "./pages/UsersPage.jsx";
+import UsersPage from "./pages/users/UsersPage.jsx";
 import BlogPage from "./pages/blog/BlogPage.jsx";
 import AboutPage from "./pages/about/AboutPage.jsx";
 import BlogDetailPage from "./pages/blog/BlogDetailPage.jsx";
@@ -13,6 +13,8 @@ import ExperimentPage from "./pages/experiments/ExperimentPage.jsx";
 import ExperimentIndexPage from "./pages/experiments/ExperimentIndexPage.jsx";
 import MemoHookPage from "./pages/experiments/MemoHookPage.jsx";
 import ReactUseMemoPage from "./pages/experiments/ReactUseMemoPage.jsx";
+import AboutIndex from "./pages/about/AboutIndex.jsx";
+import InternsCreate from "./pages/users/InternsCreate.jsx";
 
 createRoot(document.getElementById("root")).render(
   <AppProvider>
@@ -25,7 +27,7 @@ createRoot(document.getElementById("root")).render(
       <Routes>
         <Route path="/" element={<App />} />
         <Route path="/about" element={<AboutPage />}>
-          <Route index element={<div>About Index Page</div>} />
+          <Route index element={<AboutIndex />} />
           <Route path="team" element={<div>About Team Page</div>} />
           <Route path="mission" element={<div>About Mission Page</div>} />
         </Route>
@@ -34,7 +36,10 @@ createRoot(document.getElementById("root")).render(
           /about/team -> AboutTeamPage
           /about/mission -> AboutMissionPage
         */}
-        <Route path="/users" element={<UsersPage />} />
+        <Route path="/users">
+          <Route index element={<UsersPage />} />
+          <Route path="create" element={<InternsCreate />} />
+        </Route>
         <Route path="/blog" element={<BlogPage />}>
           <Route index element={<BlogListing />} />
           <Route path=":id" element={<BlogDetailPage />} />

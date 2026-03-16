@@ -1,5 +1,6 @@
-import RenderUsers from "../components/api/RenderUsers";
-import Header from "../components/Header";
+import RenderUsers from "../../components/api/RenderUsers";
+import Header from "../../components/Header";
+import InternsPage from "./InternsPage";
 
 export default function UsersPage() {
   return (
@@ -12,11 +13,12 @@ export default function UsersPage() {
         <p className="text-sm text-gray-600">
           Here are the users of our application.
         </p>
-
-        <div className="my-2">
-          <RenderUsers />
-        </div>
       </section>
+
+      <div className="my-2">
+        {/* <RenderUsers /> */}
+        <InternsPage />
+      </div>
     </div>
   );
 }
